@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4"> {# Use Bootstrap grid for responsive layout #}
+        {% for product in products %}
+        <div class="col">
+            <div class="card h-100"> {# Use card for each product #}
+                <img src="{{ url_for('static', filename=product.image) }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">${{ product.price }}</p>
+                    <form method="POST" action="{{ url_for('cart') }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" name="quantity" value="1" min="1" aria-label="Quantity">
+                            <button class="btn btn-outline-secondary" type="submit">Add to Cart</button>
+                        </div>
+                    </form>
+                    <a href="{{ url_for('product', id=product.id) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
