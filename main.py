@@ -43,7 +43,7 @@ def index():
 
 @app.route('/product/<int:id>')
 def product(id):
-    product = db.session.get(Product, id) # Correct way to get the product
+    product = db.session.get(Product, id)  # Correct way to get the product
     if product is None:
         # abort(404)
         return render_template('404.html'), 404
@@ -73,7 +73,7 @@ def cart():
     cart_items = []
     total = 0
     for product_id, quantity in session['cart'].items():
-        product = db.session.get(Product, product_id) # Correct way to get the product
+        product = db.session.get(Product, product_id)  # Correct way to get the product
         if product:
             cart_items.append({'product': product, 'quantity': quantity})
             total += product.price * quantity
