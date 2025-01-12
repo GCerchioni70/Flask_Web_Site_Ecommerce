@@ -45,7 +45,8 @@ def index():
 def product(id):
     product = db.session.get(Product, id) # Correct way to get the product
     if product is None:
-        abort(404) # Or return render_template('404.html'), 404
+        # abort(404)
+        return render_template('404.html'), 404
     return render_template('product.html', product=product)
 
 
@@ -83,7 +84,7 @@ def cart():
 # changed because product_id is int but in the cart session in managed as char
 # The problem is that the keys in your session['cart'] dictionary are integers, but when you use product_id
 # in session['cart'], Flask is still passing product_id as a string, even if you put <int:product_id> in the
-# route, the route convert product_id in a integer but the value that are inside the dictionary are not converted.
+# route, the route convert product_id in an integer but the value that are inside the dictionary are not converted.
 @app.route('/remove_from_cart/<product_id>')
 def remove_from_cart(product_id):
     if 'cart' in session and str(product_id) in session['cart']:
